@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - firefox
   pull_request:
 
 jobs:
@@ -36,3 +37,16 @@ jobs:
         with:
           name: firefox
           path: 'dist/'
+      - name: Clean up
+        run: rm -rf dist
+      - name: Remove node_modules
+        run: rm -rf node_modules
+      - name: Remove README.md
+        run: rm README.md
+      - name: Rename firefox-build.md to README.md
+        run: mv firefox-build.md README.md
+      - name: Upload sources as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sources
+          path: '.'
